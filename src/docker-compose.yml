@@ -1,11 +1,17 @@
 version: '3.4'
 
 services:
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+      
   convention.api:
     image: ${DOCKER_REGISTRY-}convention.api
     build:
       context: .
       dockerfile: Convention.API/Dockerfile
+      
   ocelot.api:
     image: ${DOCKER_REGISTRY-}ocelot.api
     build:
@@ -17,5 +23,6 @@ services:
 
 volumes:
    seq-data:
+   frontend-data:
    
 
