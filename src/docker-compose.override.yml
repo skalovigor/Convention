@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  convention.api:
+    container_name: convention.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "SeqConfiguration:Uri=http://seq:5341"
+    ports:
+      - "8000:80"
+
+  ocelot.api:
+    container_name: ocelot.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "SeqConfiguration:Uri=http://seq:5341"
+    depends_on:
+        - convention.api
+    ports:
+      - "8010:80"
+
+  seq:
+    container_name: seq
+    environment:
+        - ACCEPT_EULA=Y
+        - BASE_URI=http://localhost:5341
+    ports:
+        - "5341:80"
+    volumes:
+        - seq-data:/data   
