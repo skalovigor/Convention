@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Convention.BLL.Features.Convention.Services;
+using Convention.BLL.Features.Identity.Services;
 using Convention.BLL.Infrastructure.Behaviours;
 using FluentValidation;
 using MediatR;
@@ -20,6 +21,8 @@ namespace Convention.BLL
             
             //TODO: all services should be injected automatically
             services.AddScoped<IConventionService, ConventionService>();
+            
+            services.AddScoped<IIdentityContext, IdentityContextLoader>();
 
             return services;
         }

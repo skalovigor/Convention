@@ -2,7 +2,9 @@ using System.Security.Claims;
 using Convention.API.Middleware;
 using Convention.BLL;
 using Convention.DAL;
+using Convention.Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -48,15 +50,21 @@ namespace Convention.API
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    NameClaimType = ClaimTypes.NameIdentifier
+                    NameClaimType = ClaimTypes.NameIdentifier,
                 };
             });
+
+            services.AddAuthorization(/*options =>
+                /*options.AddPolicy("read:messages",
+                    policy => policy.Requirements.Add(new HasScopeRequirement("read:messages", domain)))*/);
+           ;
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Convention.API", Version = "v1" });
             });
 
+            services.AddHttpContextAccessor();
             services.AddBllServices(Configuration);
             services.AddSqlDbServices(Configuration);
         }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Convention.API.Attributes;
 using Convention.BLL.Features.Convention.Services;
 using Convention.Contracts.Models;
+using Convention.Domain.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,6 +22,7 @@ namespace Convention.API.Controllers
             _conventionService = conventionService;
         }
         
+        [AuthorizeRole(RoleType.Admin)]
         [HttpPut("create")]
         [ProducesResponseType(typeof(Guid),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -28,6 +31,5 @@ namespace Convention.API.Controllers
             var id = await _conventionService.Create(request);
             return Ok(id);
         }
-        
     }
 }
