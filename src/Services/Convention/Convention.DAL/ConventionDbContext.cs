@@ -27,6 +27,7 @@ namespace Convention.DAL
             modelBuilder.ApplyConfiguration(new ParticipantEntityConfiguration());
             modelBuilder.ApplyConfiguration(new TalkEntityConfiguration());
             modelBuilder.ApplyConfiguration(new TalkParticipantEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new SpeakerEntityConfiguration());
         }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

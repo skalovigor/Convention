@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Convention.DAL.Migrations
 {
     [DbContext(typeof(ConventionDbContext))]
-    [Migration("20210605110847_InitialCreate")]
+    [Migration("20210605113552_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,6 +89,27 @@ namespace Convention.DAL.Migrations
                     b.ToTable("Participant");
                 });
 
+            modelBuilder.Entity("Convention.Domain.Speaker", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Speaker");
+                });
+
             modelBuilder.Entity("Convention.Domain.Talk", b =>
                 {
                     b.Property<Guid>("Id")
@@ -113,6 +134,9 @@ namespace Convention.DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<Guid>("SpeakerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
@@ -121,6 +145,8 @@ namespace Convention.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ConventionId");
+
+                    b.HasIndex("SpeakerId");
 
                     b.ToTable("Talks");
                 });
@@ -163,16 +189,32 @@ namespace Convention.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Convention.Domain.Speaker", "Speaker")
+                        .WithMany("Talks")
+                        .HasForeignKey("SpeakerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Convention");
+
+                    b.Navigation("Speaker");
                 });
 
             modelBuilder.Entity("Convention.Domain.TalkParticipant", b =>
                 {
+                    b.HasOne("Convention.Domain.Participant", "Participant")
+                        .WithMany("TalkParticipants")
+                        .HasForeignKey("ParticipantId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Convention.Domain.Talk", "Talk")
                         .WithMany("TalkParticipants")
                         .HasForeignKey("ParticipantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Participant");
 
                     b.Navigation("Talk");
                 });
@@ -181,6 +223,16 @@ namespace Convention.DAL.Migrations
                 {
                     b.Navigation("Participants");
 
+                    b.Navigation("Talks");
+                });
+
+            modelBuilder.Entity("Convention.Domain.Participant", b =>
+                {
+                    b.Navigation("TalkParticipants");
+                });
+
+            modelBuilder.Entity("Convention.Domain.Speaker", b =>
+                {
                     b.Navigation("Talks");
                 });
 

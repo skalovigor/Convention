@@ -8,6 +8,7 @@ namespace Convention.Domain
     {
         public Guid Id { get; set; }
         public Guid ConventionId { get; set; }
+        public Guid SpeakerId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
@@ -16,5 +17,6 @@ namespace Convention.Domain
         
         public Convention Convention { get; set; }
         public List<TalkParticipant> TalkParticipants { get; set; }
+        public Speaker Speaker { get; set; }
     }
 }

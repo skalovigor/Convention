@@ -20,7 +20,8 @@ namespace Convention.DAL.EntityConfigurations
          
             builder.HasMany(m => m.TalkParticipants)
                 .WithOne(m => m.Talk)
-                .HasForeignKey(m => m.ParticipantId);
+                .HasForeignKey(m => m.ParticipantId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

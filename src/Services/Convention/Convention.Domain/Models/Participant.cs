@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Convention.Domain
 {
@@ -13,5 +14,6 @@ namespace Convention.Domain
         public string Email { get; set; }
 
         public Convention Convention { get; set; }
+        public List<TalkParticipant> TalkParticipants { get; set; }
     }
 }

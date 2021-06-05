@@ -8,5 +8,6 @@ namespace Convention.Domain
         public Guid ParticipantId { get; set; }
         public Guid TalkId { get; set; }
         public Talk Talk { get; set; }
+        public Participant Participant { get; set; }
     }
 }

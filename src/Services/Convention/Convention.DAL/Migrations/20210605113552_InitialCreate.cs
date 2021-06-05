@@ -27,6 +27,20 @@ namespace Convention.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Speaker",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Speaker", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Participant",
                 schema: "dbo",
                 columns: table => new
@@ -58,6 +72,7 @@ namespace Convention.DAL.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ConventionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SpeakerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -74,6 +89,12 @@ namespace Convention.DAL.Migrations
                         principalTable: "Conventions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Talks_Speaker_SpeakerId",
+                        column: x => x.SpeakerId,
+                        principalSchema: "dbo",
+                        principalTable: "Speaker",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -89,12 +110,17 @@ namespace Convention.DAL.Migrations
                 {
                     table.PrimaryKey("PK_TalkParticipant", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_TalkParticipant_Participant_ParticipantId",
+                        column: x => x.ParticipantId,
+                        principalSchema: "dbo",
+                        principalTable: "Participant",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_TalkParticipant_Talks_ParticipantId",
                         column: x => x.ParticipantId,
                         principalSchema: "dbo",
                         principalTable: "Talks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -114,16 +140,22 @@ namespace Convention.DAL.Migrations
                 schema: "dbo",
                 table: "Talks",
                 column: "ConventionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Talks_SpeakerId",
+                schema: "dbo",
+                table: "Talks",
+                column: "SpeakerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Participant",
+                name: "TalkParticipant",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "TalkParticipant",
+                name: "Participant",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
@@ -132,6 +164,10 @@ namespace Convention.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Conventions",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "Speaker",
                 schema: "dbo");
         }
     }

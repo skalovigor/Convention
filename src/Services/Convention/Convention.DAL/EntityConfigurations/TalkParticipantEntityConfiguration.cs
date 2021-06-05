@@ -7,8 +7,7 @@ namespace Convention.DAL.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Domain.TalkParticipant> builder)
         {
-            builder.HasKey(e => e.Id);
-            
+            builder.HasKey(m=> m.Id);
             builder.Property(e => e.TalkId).IsRequired();
             builder.Property(e => e.ParticipantId).IsRequired();
         }
