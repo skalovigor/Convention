@@ -14,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\Convention.Common\Convention.Common.csproj" />
       <ProjectReference Include="..\Convention.Domain\Convention.Domain.csproj" />
     </ItemGroup>
 

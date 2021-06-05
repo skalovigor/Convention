@@ -11,6 +11,7 @@ COPY ["Services/Convention/Convention.API/Convention.API.csproj", "Convention.AP
 COPY ["Services/Convention/Convention.BLL/Convention.BLL.csproj", "Convention.BLL/"]
 COPY ["Services/Convention/Convention.DAL/Convention.DAL.csproj", "Convention.DAL/"]
 COPY ["Services/Convention/Convention.Domain/Convention.Domain.csproj", "Convention.Domain/"]
+COPY ["Services/Convention/Convention.Contracts/Convention.Contracts.csproj", "Convention.Contracts/"]
 COPY ["Shared/Convention.Common/Convention.Common.csproj", "Shared/Convention.Common/"]
 RUN dotnet restore "Convention.API/Convention.API.csproj"
 COPY . .

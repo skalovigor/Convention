@@ -1,8 +1,9 @@
 ﻿using System;
 
-namespace Convention.BLL
+namespace Convention.Tests
 {
     public class Class1
     {
+        
     }
 }

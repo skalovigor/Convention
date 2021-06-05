@@ -11,6 +11,9 @@ namespace Convention.DAL
             services.AddDbContext<ConventionDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("ConnectionString")));
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWorkAccessor, UnitOfWorkAccessor>();
+
             return services;
         }
     }

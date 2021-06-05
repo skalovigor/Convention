@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.6">
@@ -22,7 +23,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Convention.Common\Convention.Common.csproj" />
+    <ProjectReference Include="..\Convention.BLL\Convention.BLL.csproj" />
+    <ProjectReference Include="..\Convention.Contracts\Convention.Contracts.csproj" />
     <ProjectReference Include="..\Convention.DAL\Convention.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Middleware" />
   </ItemGroup>
 
 </Project>

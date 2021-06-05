@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Convention.BLL;
 using Convention.DAL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -54,6 +55,7 @@ namespace Convention.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Convention.API", Version = "v1" });
             });
 
+            services.AddBllServices(Configuration);
             services.AddSqlDbServices(Configuration);
         }
 

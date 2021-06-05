@@ -1,7 +1,12 @@
-﻿namespace Convention.DAL.UnitOfWork
+﻿using System;
+using System.Threading.Tasks;
+using Convention.DAL.Repositories;
+
+namespace Convention.DAL
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable, IAsyncDisposable
     {
-        
+        IConventionRepository ConventionRepo { get; }
+        Task SubmitChanges();
     }
 }
