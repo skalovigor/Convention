@@ -27,7 +27,7 @@ namespace Convention.BLL.Infrastructure.Behaviours
                 var failures = validationResults.SelectMany(r => r.Errors).Where(f => f != null).ToList();
 
                 if (failures.Count != 0)
-                    throw new ValidationException(failures);
+                    throw new Convention.BLL.Infrastructure.Exceptions.ValidationException(failures);
             }
             return await next();
         }

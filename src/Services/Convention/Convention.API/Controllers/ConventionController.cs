@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Convention.BLL.Features.Convention.Services;
 using Convention.Contracts.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ namespace Convention.API.Controllers
 {
     [ApiController]
     [Route("convention")]
-   // [Authorize]
+    [Authorize]
     public class ConventionController : ControllerBase
     {
         private readonly IConventionService _conventionService;
@@ -20,12 +21,12 @@ namespace Convention.API.Controllers
         }
         
         [HttpPut("create")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Guid),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody]ConventionCreateRequest request)
         {
-            await _conventionService.Create(request);
-            return Ok();
+            var id = await _conventionService.Create(request);
+            return Ok(id);
         }
         
     }

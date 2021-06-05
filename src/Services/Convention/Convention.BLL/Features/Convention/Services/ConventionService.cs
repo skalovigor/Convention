@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using Convention.BLL.Features.Convention.Commands;
 using Convention.Contracts.Models;
@@ -18,9 +19,10 @@ namespace Convention.BLL.Features.Convention.Services
             _mapper = mapper;
         }
         
-        public async Task Create(ConventionCreateRequest request)
+        public async Task<Guid> Create(ConventionCreateRequest request)
         {
-            await _mediator.Send(_mapper.Map<ConventionCreateCommand>(request));
+            var id= await _mediator.Send(_mapper.Map<ConventionCreateCommand>(request));
+            return id;
         }
     }
 }

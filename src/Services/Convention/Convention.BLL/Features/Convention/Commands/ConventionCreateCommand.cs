@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Convention.BLL.Features.Convention.Commands
 {
-    public record ConventionCreateCommand : IRequest,
+    public record ConventionCreateCommand : IRequest<Guid>,
         IValidateRequest
     {
         public string Name { get; set; }
@@ -16,7 +16,7 @@ namespace Convention.BLL.Features.Convention.Commands
         public string Information { get; set; }
     }
     
-    internal class ConventionCreateCommandHandler : IRequestHandler<ConventionCreateCommand>
+    internal class ConventionCreateCommandHandler : IRequestHandler<ConventionCreateCommand, Guid>
     {
         private readonly IUnitOfWorkAccessor _unitOfWorkAccessor;
 
@@ -25,20 +25,21 @@ namespace Convention.BLL.Features.Convention.Commands
             _unitOfWorkAccessor = unitOfWorkAccessor;
         }
         
-        public Task<Unit> Handle(ConventionCreateCommand request, CancellationToken cancellationToken)
+        public Task<Guid> Handle(ConventionCreateCommand request, CancellationToken cancellationToken)
         {
             using var unitOfWOrk = _unitOfWorkAccessor.UnitOfWork;
-            
-            unitOfWOrk.ConventionRepo.Add(new Domain.Convention
+
+            var entity = new Domain.Convention
             {
                 Id = Guid.NewGuid(),
                 Name = request.Name,
                 StartDate = request.StartDate,
                 EndDate = request.EndDate,
                 Information = request.Information
-            });
+            };
+            unitOfWOrk.ConventionRepo.Add(entity);
             
-            return Unit.Task;
+            return Task.FromResult(entity.Id);
         }
     }
 }
