@@ -10,8 +10,11 @@ services:
     image: ${DOCKER_REGISTRY-}convention.api
     build:
       context: .
-      dockerfile: Convention.API/Dockerfile
-      
+      dockerfile: Services/Convention/Convention.API/Dockerfile
+
+  conventiondb:
+    image: mcr.microsoft.com/mssql/server:2019-latest    
+  
   ocelot.api:
     image: ${DOCKER_REGISTRY-}ocelot.api
     build:

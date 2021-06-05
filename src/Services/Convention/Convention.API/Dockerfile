@@ -7,11 +7,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
-COPY ["Convention.API/Convention.API.csproj", "Convention.API/"]
+COPY ["Services/Convention/Convention.API/Convention.API.csproj", "Convention.API/"]
+COPY ["Services/Convention/Convention.BLL/Convention.BLL.csproj", "Convention.BLL/"]
+COPY ["Services/Convention/Convention.DAL/Convention.DAL.csproj", "Convention.DAL/"]
+COPY ["Services/Convention/Convention.Domain/Convention.Domain.csproj", "Convention.Domain/"]
 COPY ["Shared/Convention.Common/Convention.Common.csproj", "Shared/Convention.Common/"]
 RUN dotnet restore "Convention.API/Convention.API.csproj"
 COPY . .
-WORKDIR "/src/Convention.API"
+WORKDIR "/src/Services/Convention/Convention.API"
 RUN dotnet build "Convention.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

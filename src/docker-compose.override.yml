@@ -16,8 +16,20 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "SeqConfiguration:Uri=http://seq:5341"
+      - "ConnectionStrings:ConnectionString=Server=conventiondb;Database=ConventionDb;User Id=sa;Password=Y12322s23s!dv2232"
+    depends_on:
+      - conventiondb
     ports:
       - "8000:80"
+        
+  conventiondb:
+    container_name: conventiondb
+    environment:
+      SA_PASSWORD: "Y12322s23s!dv2232"
+      ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+      - "1433:1433"
 
   ocelot.api:
     container_name: ocelot.api
