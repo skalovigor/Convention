@@ -9,6 +9,7 @@ namespace Convention.Common.Repository
         where T : class
     {
         Task<IReadOnlyCollection<T>> GetAllAsync(Expression<Func<T, bool>> whereExpression);
+        Task<IReadOnlyCollection<T>> GetAllAsync();
         Task<T> GetAsync(TKey id);
         void Add(T entity);
         void AddRange(IEnumerable<T> entities);

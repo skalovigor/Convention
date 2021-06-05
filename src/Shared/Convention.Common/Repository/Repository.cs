@@ -36,5 +36,10 @@ namespace Convention.Common.Repository
         {
             return await DbSet.Where(whereExpression).ToListAsync();
         }
+
+        public async Task<IReadOnlyCollection<T>> GetAllAsync()
+        {
+            return await DbSet.ToListAsync();
+        }
     }
 }

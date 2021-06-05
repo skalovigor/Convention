@@ -11,9 +11,11 @@ namespace Convention.DAL
         {
             _dbContext = dbContext;
             ConventionRepo = new ConventionRepository(dbContext.Conventions);
+            ParticipantRepo = new ParticipantRepository(dbContext.Participant);
         }
 
         public IConventionRepository ConventionRepo { get; set; }
+        public IParticipantRepository ParticipantRepo { get; set; }
 
         public void Dispose()
         {

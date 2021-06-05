@@ -7,6 +7,7 @@ namespace Convention.DAL
     public interface IUnitOfWork : IDisposable, IAsyncDisposable
     {
         IConventionRepository ConventionRepo { get; }
+        IParticipantRepository ParticipantRepo { get; }
         Task SubmitChanges();
     }
 }

@@ -9,6 +9,8 @@ namespace Convention.BLL.Features.Convention.Configuration
         public ConventionMappingProfile()
         {
             CreateMap<ConventionCreateRequest, ConventionCreateCommand>();
+            
+            CreateMap<Domain.Convention, ConventionResponse>();
         }
     }
 }

@@ -20,6 +20,9 @@ namespace Convention.DAL.EntityConfigurations
             builder.Property(e => e.UserId)
                 .HasMaxLength(100).IsRequired();
             
+            builder .HasIndex(p => new { p.UserId, p.ConventionId })
+                .IsUnique();
+            
             builder.HasMany(m => m.TalkParticipants)
                 .WithOne(m => m.Participant)
                 .HasForeignKey(m => m.ParticipantId)
