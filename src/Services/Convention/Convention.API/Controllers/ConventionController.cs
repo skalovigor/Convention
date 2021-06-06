@@ -65,7 +65,7 @@ namespace Convention.API.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet("active")]
+        [HttpGet("list")]
         [ProducesResponseType(typeof(List<ConventionResponse>),StatusCodes.Status200OK)]
         public async Task<IActionResult> List(/*TODO: paging*/)
         {
@@ -113,7 +113,7 @@ namespace Convention.API.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPut("{conventionId}/talk/create")]
+        [HttpPut("{conventionId}/talk")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> TalkCreate([FromRoute] Guid conventionId, [FromBody] TalkCreateRequest request)
         {
