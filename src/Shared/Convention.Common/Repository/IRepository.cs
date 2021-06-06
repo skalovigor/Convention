@@ -14,5 +14,7 @@ namespace Convention.Common.Repository
         Task<T> GetAsync(Expression<Func<T, bool>> whereExpression);
         void Add(T entity);
         void AddRange(IEnumerable<T> entities);
+        void Update(T entity);
+        void Remove(T entity);
     }
 }

@@ -22,6 +22,16 @@ namespace Convention.Common.Repository
             DbSet.Add(entity);
         }
 
+        public virtual void Update(T entity)
+        {
+            DbSet.Update(entity);
+        }
+
+        public virtual void Remove(T entity)
+        {
+            DbSet.Remove(entity);
+        }
+
         public virtual void AddRange(IEnumerable<T> entities)
         {
             DbSet.AddRange(entities);

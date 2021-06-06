@@ -11,9 +11,7 @@ namespace Convention.BLL.Features.Talk.Queries
     public record TalksGetApprovedByConventionIdQuery(Guid ConventionId) : IRequest<IReadOnlyCollection<Domain.Talk>>
     {
         public static TalksGetApprovedByConventionIdQuery Of(Guid conventionId)
-        {
-            return new TalksGetApprovedByConventionIdQuery(conventionId);
-        } 
+            => new(conventionId);
     }
 
     internal class TalksGetByConventionIdQueryHandler : IRequestHandler<TalksGetApprovedByConventionIdQuery, IReadOnlyCollection<Domain.Talk>>
