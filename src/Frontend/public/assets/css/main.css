@@ -1651,6 +1651,10 @@ a.back-to-top:hover, a.back-to-top:focus {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
+.padding-bottom-40 {
+  padding-bottom: 40px;
+}
+
 .container-form .form-wrapper .form-group {
   margin-bottom: 30px;
 }

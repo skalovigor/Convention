@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { format } from "date-fns";
 
 class Conventions extends Component {
   state = {
@@ -14,6 +15,7 @@ class Conventions extends Component {
       .then((response) => this.setState({ conventions: response }))
       .catch((error) => this.setState({ message: error.message }));
   }
+
 
   render() {
     return (
@@ -37,7 +39,7 @@ class Conventions extends Component {
         <section id="event-slides" className="section-padding">
           {this.state.conventions.map((convention) => {
             return (
-              <div key={convention.id} className="container">
+              <div key={convention.id} className="container padding-bottom-40">
                 <div className="row">
                   <div className="col-12">
                     <div className="section-title-header text-center">
@@ -66,7 +68,16 @@ class Conventions extends Component {
                     data-wow-delay="0.3s"
                   >
                     <p className="intro-desc">{convention.information}</p>
-                    
+                    <h2 className="intro-title">Info:</h2>
+                    <ul className="list-specification">
+                      <li>
+                        <i className="lni-check-mark-circle"></i> {convention.address}
+                      </li>
+                      <li>
+                        <i className="lni-check-mark-circle"></i>
+                         {convention.startDateFormatted} - {convention.endDateFormatted}
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>

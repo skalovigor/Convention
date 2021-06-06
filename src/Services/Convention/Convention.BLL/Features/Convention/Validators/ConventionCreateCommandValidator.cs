@@ -19,10 +19,14 @@ namespace Convention.BLL.Features.Convention.Validators
                 .GreaterThan(DateTime.Now);
             RuleFor(m => m.EndDate)
                 .NotNull()
-                .GreaterThanOrEqualTo(m=> m.EndDate);
+                .GreaterThanOrEqualTo(m=> m.StartDate);
             RuleFor(m => m.BannerUrl)
                 .NotEmpty()
                 .NotNull();
+            RuleFor(m => m.Address)
+                .NotEmpty()
+                .NotNull()
+                .MaximumLength(200);
         }
     }
 }

@@ -10,7 +10,8 @@ class ConventionCreate extends Component {
             startDate: new Date(),
             endDate: new Date(),
             bannerUrl: '',
-            information: ''};
+            information: '',
+            address: ''};
       }
 
       handleChange = (event) => {
@@ -27,8 +28,14 @@ class ConventionCreate extends Component {
             // We convert the React state to JSON and send it as the POST body
             body: JSON.stringify(this.state)
           }).then(function(response) {
-            props.history.push("/conventions");
-          });
+            console.log(response);
+            if (response.ok){
+              props.history.push("/conventions");
+              return;
+            } 
+            throw new Error(response);
+          })
+          .catch(error => alert("Error, please check your data!"));;
     
         event.preventDefault();
     }
@@ -120,6 +127,21 @@ class ConventionCreate extends Component {
                             onChange={this.handleChange}
                             required
                             data-error="Please enter date"
+                          />
+                          <div className="help-block with-errors"></div>
+                        </div>
+                      </div>
+                      <div className="col-md-12 form-line">
+                        <div className="form-group">
+                          <input
+                            className="form-control"
+                            id="address"
+                            name="address"
+                            placeholder="Address"
+                            value={this.state.value}
+                            onChange={this.handleChange}
+                            required
+                            data-error="Please enter address"
                           />
                           <div className="help-block with-errors"></div>
                         </div>

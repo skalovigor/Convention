@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Convention.DAL;
@@ -27,7 +28,7 @@ namespace Convention.BLL.Features.Convention.Query
         public async Task<IReadOnlyCollection<Domain.Convention>> Handle(ConventionGetActualQuery request, CancellationToken cancellationToken)
         {
             var result = await _unitOfWork.ConventionRepo.GetAllAsync(m=> m.EndDate > DateTime.Now);
-            return result;
+            return result.OrderBy(m=>m.StartDate).ToList();
         }
     }
 }

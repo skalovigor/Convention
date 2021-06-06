@@ -26,6 +26,11 @@ namespace Convention.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<string>("BannerUrl")
                         .IsRequired()
                         .HasMaxLength(255)

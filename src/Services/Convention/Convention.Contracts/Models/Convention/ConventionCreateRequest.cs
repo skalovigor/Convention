@@ -9,5 +9,6 @@ namespace Convention.Contracts.Models
         public DateTime EndDate { get; set; }
         public string Information { get; set; }
         public string BannerUrl { get; set; }
+        public string Address { get; set; }
     }
 }

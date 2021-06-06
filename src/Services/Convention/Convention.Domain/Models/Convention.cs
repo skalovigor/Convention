@@ -11,7 +11,7 @@ namespace Convention.Domain
         public DateTime EndDate { get; set; }
         public string Information { get; set; }
         public string BannerUrl { get; set; }
-        
+        public string Address { get; set; }
         public List<Talk> Talks { get; set; }
         public List<Participant> Participants { get; set; }
     }
