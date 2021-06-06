@@ -16,7 +16,7 @@ namespace Convention.DAL
 
         public DbSet<Domain.Convention> Conventions { get; set; }
         public DbSet<Domain.Talk> Talks { get; set; }
-        public DbSet<Domain.Participant> Participant { get; set; }
+        public DbSet<Domain.Participant> Participants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

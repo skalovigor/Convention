@@ -7,7 +7,6 @@ namespace Convention.BLL.Features.Convention.Services
 {
     public interface IConventionService
     {
-        Task<Guid> Create(ConventionCreateRequest request);
-        Task<List<ConventionResponse>> GetActualList();
+        
     }
 }

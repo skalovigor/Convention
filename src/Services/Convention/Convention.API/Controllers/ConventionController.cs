@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Convention.API.Attributes;
-using Convention.BLL.Features.Convention.Services;
-using Convention.BLL.Features.Services;
+using Convention.BLL.Features.Convention.Commands;
+using Convention.BLL.Features.Convention.Query;
+using Convention.BLL.Features.Identity.Services;
+using Convention.BLL.Features.Participant.Commands;
+using Convention.BLL.Features.Talk.Queries;
 using Convention.Contracts.Models;
 using Convention.Contracts.Models.Participant;
+using Convention.Contracts.Models.Talk;
 using Convention.Domain.Identity;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,14 +24,23 @@ namespace Convention.API.Controllers
     [Route("convention")]
     public class ConventionController : ControllerBase
     {
-        private readonly IConventionService _conventionService;
-        private readonly IParticipantService _participantService;
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
+        private readonly IIdentityContext _identityContext;
 
-        public ConventionController(IConventionService conventionService,
-            IParticipantService participantService)
+        /// <summary>
+        /// Convention features
+        /// </summary>
+        /// <param name="mediator"></param>
+        /// <param name="mapper"></param>
+        /// <param name="identityContext"></param>
+        public ConventionController(IMediator mediator,
+            IMapper mapper,
+            IIdentityContext identityContext)
         {
-            _conventionService = conventionService;
-            _participantService = participantService;
+            _mediator = mediator;
+            _mapper = mapper;
+            _identityContext = identityContext;
         }
         
         /// <summary>
@@ -39,7 +54,7 @@ namespace Convention.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody]ConventionCreateRequest request)
         {
-            var id = await _conventionService.Create(request);
+            var id= await _mediator.Send(_mapper.Map<ConventionCreateCommand>(request));
             return Ok(id);
         }
         
@@ -52,20 +67,52 @@ namespace Convention.API.Controllers
         [ProducesResponseType(typeof(List<ConventionResponse>),StatusCodes.Status200OK)]
         public async Task<IActionResult> List(/*TODO: paging*/)
         {
-            var list = await _conventionService.GetActualList();
-            return Ok(list);
+            var list= await _mediator.Send(ConventionGetActualQuery.Of());
+            var result = _mapper.Map<List<ConventionResponse>>(list);
+            return Ok(result);
         }
 
         /// <summary>
-        /// Subscribe participant for a specific convention
+        /// Subscribe user for a specific convention
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         [HttpPut("{conventionId}/participate")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Participate([FromRoute] Guid conventionId, 
             [FromBody] ParticipantCreateRequest request)
         {
-            await _participantService.ParticipateConvention(conventionId, request);
+            var command = _mapper.Map<ParticipantCreateCommand>(request);
+            await _mediator.Send(command with
+            {
+                ConventionId = conventionId,
+                UserId = _identityContext.User.Id
+            });
+            return Ok();
+        }
+        
+        /// <summary>
+        /// Retrieve all approved talks for convention 
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("{conventionId}/talks")]
+        [ProducesResponseType(typeof(List<TalkResponse>),StatusCodes.Status200OK)]
+        public async Task<IActionResult> Talks([FromRoute] Guid conventionId)
+        {
+            var talks = await _mediator.Send(TalksGetApprovedByConventionIdQuery.Of(conventionId));
+            return Ok(_mapper.Map<List<TalkResponse>>(talks));
+        }
+        
+        /// <summary>
+        /// Subscribe user for a specific talkT
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPut("{conventionId}/talk/{talkId}/participate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Participate([FromRoute] Guid conventionId, [FromRoute] Guid talkId)
+        {
             return Ok();
         }
     }

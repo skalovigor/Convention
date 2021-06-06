@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Convention.DAL.Repositories;
+using Convention.DAL.Repositories.Talk;
 
 namespace Convention.DAL
 {
@@ -11,11 +12,13 @@ namespace Convention.DAL
         {
             _dbContext = dbContext;
             ConventionRepo = new ConventionRepository(dbContext.Conventions);
-            ParticipantRepo = new ParticipantRepository(dbContext.Participant);
+            ParticipantRepo = new ParticipantRepository(dbContext.Participants);
+            TalkRepo = new TalkRepository(dbContext.Talks);
         }
 
-        public IConventionRepository ConventionRepo { get; set; }
-        public IParticipantRepository ParticipantRepo { get; set; }
+        public IConventionRepository ConventionRepo { get; }
+        public IParticipantRepository ParticipantRepo { get; }
+        public ITalkRepository TalkRepo { get; }
 
         public void Dispose()
         {

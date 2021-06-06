@@ -14,6 +14,9 @@ namespace Convention.DAL.EntityConfigurations
             builder.Property(e => e.StartDate).IsRequired();
             builder.Property(e => e.EndDate).IsRequired();
             builder.Property(e => e.Information).IsRequired();
+            builder.Property(e => e.BannerUrl)
+                .HasMaxLength(255)
+                .IsRequired();
             
             builder.HasMany(m => m.Participants)
                 .WithOne(m => m.Convention)

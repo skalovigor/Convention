@@ -6,6 +6,5 @@ namespace Convention.BLL.Features.Services
 {
     public interface IParticipantService
     {
-        Task ParticipateConvention(Guid conventionId, ParticipantCreateRequest request);
     }
 }

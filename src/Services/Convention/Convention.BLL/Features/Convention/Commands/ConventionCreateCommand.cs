@@ -14,6 +14,7 @@ namespace Convention.BLL.Features.Convention.Commands
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Information { get; set; }
+        public string BannerUrl { get; set; }
     }
     
     internal class ConventionCreateCommandHandler : IRequestHandler<ConventionCreateCommand, Guid>
@@ -35,7 +36,8 @@ namespace Convention.BLL.Features.Convention.Commands
                 Name = request.Name,
                 StartDate = request.StartDate,
                 EndDate = request.EndDate,
-                Information = request.Information
+                Information = request.Information,
+                BannerUrl = request.BannerUrl
             };
             unitOfWOrk.ConventionRepo.Add(entity);
             

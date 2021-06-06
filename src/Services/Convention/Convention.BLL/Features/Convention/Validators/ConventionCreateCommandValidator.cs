@@ -20,6 +20,9 @@ namespace Convention.BLL.Features.Convention.Validators
             RuleFor(m => m.EndDate)
                 .NotNull()
                 .GreaterThanOrEqualTo(m=> m.EndDate);
+            RuleFor(m => m.BannerUrl)
+                .NotEmpty()
+                .NotNull();
         }
     }
 }

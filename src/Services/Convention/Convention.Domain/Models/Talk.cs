@@ -11,6 +11,7 @@ namespace Convention.Domain
         public Guid SpeakerId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string ImageUrl { get; set; }
         public DateTime Date { get; set; }
         public TalkStatus Status { get; set; }
         public int AmountOfSeats { get; set; }

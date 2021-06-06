@@ -17,6 +17,8 @@ namespace Convention.DAL.EntityConfigurations
                 .IsRequired();
             builder.Property(e => e.AmountOfSeats).IsRequired();
             builder.Property(e => e.Description).IsRequired();
+            builder.Property(e => e.ImageUrl)
+                .HasMaxLength(255).IsRequired();
          
             builder.HasMany(m => m.TalkParticipants)
                 .WithOne(m => m.Talk)

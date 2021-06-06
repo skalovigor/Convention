@@ -13,6 +13,10 @@ namespace Convention.DAL.EntityConfigurations
                 .HasMaxLength(50).IsRequired();
             builder.Property(e => e.UserId)
                 .HasMaxLength(100).IsRequired();
+            builder.Property(e => e.Position)
+                .HasMaxLength(100).IsRequired();
+            builder.Property(e => e.ProfileUrl)
+                .HasMaxLength(255).IsRequired();
            
             builder.HasMany(m => m.Talks)
                 .WithOne(m => m.Speaker)
