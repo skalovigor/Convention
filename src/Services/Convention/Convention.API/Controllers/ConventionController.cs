@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Convention.API.Attributes;
+using Convention.API.Security;
 using Convention.BLL.Features.Convention.Commands;
 using Convention.BLL.Features.Convention.Query;
 using Convention.BLL.Features.Identity.Services;
@@ -51,7 +51,7 @@ namespace Convention.API.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AuthorizeRole(RoleType.Admin)]
+        [Authorize(Policies.ConventionManager)]
         [HttpPut]
         [ProducesResponseType(typeof(Guid),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -72,6 +72,20 @@ namespace Convention.API.Controllers
         {
             var list= await _mediator.Send(ConventionGetActualQuery.Of());
             var result = _mapper.Map<List<ConventionResponse>>(list);
+            return Ok(result);
+        }
+        
+        /// <summary>
+        /// Retrieve convention by id
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("{conventionId}")]
+        [ProducesResponseType(typeof(List<ConventionResponse>),StatusCodes.Status200OK)]
+        public async Task<IActionResult> ById([FromRoute] Guid conventionId)
+        {
+            var convention= await _mediator.Send(ConventionGetByIdQuery.Of(conventionId));
+            var result = _mapper.Map<ConventionResponse>(convention);
             return Ok(result);
         }
 
@@ -113,7 +127,7 @@ namespace Convention.API.Controllers
         /// <param name="conventionId"></param>
         /// <param name="request"></param>
         /// <returns></returns>
-        [Authorize]
+        [Authorize(Policies.TalkCreator)]
         [HttpPut("{conventionId}/talk")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> TalkCreate([FromRoute] Guid conventionId, [FromBody] TalkCreateRequest request)

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 class Conventions extends Component {
   state = {
@@ -78,7 +78,11 @@ class Conventions extends Component {
                          {convention.startDateFormatted} - {convention.endDateFormatted}
                       </li>
                     </ul>
+                    <p> <Link to={"/convention/" + convention.id}>Read more</Link></p>
+
                   </div>
+                 
+
                 </div>
               </div>
             );

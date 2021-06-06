@@ -9,6 +9,7 @@ import Public from "./Public";
 import Private from "./Private";
 import Conventions from "./Conventions/Conventions";
 import ConventionCreate from "./Conventions/ConventionCreate";
+import ConventionDetails from "./Conventions/ConventionDetails";
 import PrivateRoute from "./PrivateRoute";
 import AuthContext from "./AuthContext";
 import Footer from "./Footer";
@@ -51,6 +52,10 @@ class App extends Component {
             render={props => <Conventions {...props} />}
           />
           <PrivateRoute path="/convention/create" component={ConventionCreate} />
+          <Route
+            path="/convention/:conventionId"
+            render={props => <ConventionDetails {...props} />}
+          />
           <PrivateRoute path="/profile" component={Profile} />
           <Route path="/public" component={Public} />
           <PrivateRoute path="/private" component={Private} />

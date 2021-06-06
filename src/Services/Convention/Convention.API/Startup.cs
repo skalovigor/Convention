@@ -1,11 +1,15 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
 using Convention.API.Middleware;
+using Convention.API.Security;
 using Convention.BLL;
+using Convention.BLL.Infrastructure.Helpers;
 using Convention.DAL;
 using Convention.Domain;
+using Convention.Domain.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -57,10 +61,12 @@ namespace Convention.API
                 };
             });
 
-            services.AddAuthorization(/*options =>
-                /*options.AddPolicy("read:messages",
-                    policy => policy.Requirements.Add(new HasScopeRequirement("read:messages", domain)))*/);
-           ;
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.ConventionManager, AddScopeRequirementsToPolicy(PermissionScope.ConventionCreate));
+                options.AddPolicy(Policies.TalkCreator, AddScopeRequirementsToPolicy(PermissionScope.TalkCreate));
+                options.AddPolicy(Policies.TalkManager, AddScopeRequirementsToPolicy(PermissionScope.TalkApprove, PermissionScope.TalkRemove));
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -98,6 +104,16 @@ namespace Convention.API
             {
                 endpoints.MapControllers();
             });
+        }
+        
+        private static Action<AuthorizationPolicyBuilder> AddScopeRequirementsToPolicy(PermissionScope scope)
+        {
+            return policy => policy.Requirements.Add(new ScopeRequirement(EnumHelper.GetEnumDescription(scope)));
+        }
+
+        private static Action<AuthorizationPolicyBuilder> AddScopeRequirementsToPolicy(params PermissionScope[] scopes)
+        {
+            return policy => policy.Requirements.Add(new MultipleScopeRequirements(scopes.Select(m=> EnumHelper.GetEnumDescription(m)).ToArray()));
         }
     }
 }

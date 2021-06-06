@@ -4,6 +4,7 @@ class ConventionCreate extends Component {
     
     constructor(props) {
         super(props);
+        const { isAuthenticated, userHasScopes } = this.props.auth;
         this.props = props;
         this.state = { 
             name: '',
@@ -40,8 +41,8 @@ class ConventionCreate extends Component {
         event.preventDefault();
     }
 
-  render() {
-    return (
+  render() { 
+    return  (
       <section id="contact-map" className="section-padding">
         <div className="container">
           <div className="row justify-content-center">

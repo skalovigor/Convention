@@ -8,9 +8,9 @@ namespace Convention.Domain.Identity
         TalkCreate,
         [Description("talk:approve")]
         TalkApprove,
-        [Description("convention:create")]
-        ConventionCreate,
-        [Description("profile")]
-        Profile
+        [Description("talk:remove")]
+        TalkRemove,
+        [Description("manage:convention")]
+        ConventionCreate
     }
 }

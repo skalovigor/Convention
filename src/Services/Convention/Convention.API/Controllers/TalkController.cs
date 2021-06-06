@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Convention.API.Attributes;
+using Convention.API.Security;
 using Convention.BLL.Features.Identity.Services;
 using Convention.BLL.Features.Talk.Commands;
 using Convention.Domain.Identity;
@@ -41,7 +42,7 @@ namespace Convention.API.Controllers
         /// </summary>
         /// <param name="talkId"></param>
         /// <returns></returns>
-        [AuthorizeRole(RoleType.Admin)]
+        [Authorize(Policies.TalkManager)]
         [HttpPatch("{talkId}/approve")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -56,7 +57,7 @@ namespace Convention.API.Controllers
         /// </summary>
         /// <param name="talkId"></param>
         /// <returns></returns>
-        [AuthorizeRole(RoleType.Admin)]
+        [Authorize(Policies.TalkManager)]
         [HttpDelete("{talkId}/remove")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
