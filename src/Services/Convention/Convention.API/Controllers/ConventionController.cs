@@ -7,6 +7,8 @@ using Convention.BLL.Features.Convention.Commands;
 using Convention.BLL.Features.Convention.Query;
 using Convention.BLL.Features.Identity.Services;
 using Convention.BLL.Features.Participant.Commands;
+using Convention.BLL.Features.Speaker.Queries;
+using Convention.BLL.Features.Talk.Commands;
 using Convention.BLL.Features.Talk.Queries;
 using Convention.Contracts.Models;
 using Convention.Contracts.Models.Participant;
@@ -102,6 +104,27 @@ namespace Convention.API.Controllers
         {
             var talks = await _mediator.Send(TalksGetApprovedByConventionIdQuery.Of(conventionId));
             return Ok(_mapper.Map<List<TalkResponse>>(talks));
+        }
+        
+        /// <summary>
+        /// create new talks for specific convention
+        /// </summary>
+        /// <param name="conventionId"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPut("{conventionId}/talk/create")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> TalkCreate([FromRoute] Guid conventionId, [FromBody] TalkCreateRequest request)
+        {
+            var speaker = await _mediator.Send(SpeakerGetByUserIdQuery.Of(_identityContext.User.Id));
+            await _mediator.Send(_mapper.Map<TalkCreateCommand>(request)
+                with
+                {
+                    ConventionId = conventionId, SpeakerId = speaker.Id
+                });
+            
+            return Ok();
         }
         
         /// <summary>

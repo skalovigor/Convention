@@ -11,6 +11,7 @@ namespace Convention.Common.Repository
         Task<IReadOnlyCollection<T>> GetAllAsync(Expression<Func<T, bool>> whereExpression);
         Task<IReadOnlyCollection<T>> GetAllAsync();
         Task<T> GetAsync(TKey id);
+        Task<T> GetAsync(Expression<Func<T, bool>> whereExpression);
         void Add(T entity);
         void AddRange(IEnumerable<T> entities);
     }

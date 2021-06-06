@@ -32,6 +32,11 @@ namespace Convention.Common.Repository
             return await DbSet.FindAsync(id);
         }
 
+        public Task<T> GetAsync(Expression<Func<T, bool>> whereExpression)
+        {
+            return DbSet.Where(whereExpression).FirstOrDefaultAsync();
+        }
+
         public async Task<IReadOnlyCollection<T>> GetAllAsync(Expression<Func<T, bool>> whereExpression)
         {
             return await DbSet.Where(whereExpression).ToListAsync();

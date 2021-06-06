@@ -12,7 +12,6 @@
     <ItemGroup>
       <Folder Include="Features\Convention\PostProcessors" />
       <Folder Include="Features\Convention\PreProcessors" />
-      <Folder Include="Features\Talk\Configuration" />
     </ItemGroup>
 
     <ItemGroup>
