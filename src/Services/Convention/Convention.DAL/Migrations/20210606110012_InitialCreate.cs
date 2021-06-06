@@ -19,7 +19,8 @@ namespace Convention.DAL.Migrations
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Information = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Information = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BannerUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,21 +28,23 @@ namespace Convention.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Speaker",
+                name: "Speakers",
                 schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Position = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ProfileUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Speaker", x => x.Id);
+                    table.PrimaryKey("PK_Speakers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Participant",
+                name: "Participants",
                 schema: "dbo",
                 columns: table => new
                 {
@@ -55,9 +58,9 @@ namespace Convention.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Participant", x => x.Id);
+                    table.PrimaryKey("PK_Participants", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Participant_Conventions_ConventionId",
+                        name: "FK_Participants_Conventions_ConventionId",
                         column: x => x.ConventionId,
                         principalSchema: "dbo",
                         principalTable: "Conventions",
@@ -75,6 +78,7 @@ namespace Convention.DAL.Migrations
                     SpeakerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     AmountOfSeats = table.Column<int>(type: "int", nullable: false)
@@ -90,10 +94,10 @@ namespace Convention.DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Talks_Speaker_SpeakerId",
+                        name: "FK_Talks_Speakers_SpeakerId",
                         column: x => x.SpeakerId,
                         principalSchema: "dbo",
-                        principalTable: "Speaker",
+                        principalTable: "Speakers",
                         principalColumn: "Id");
                 });
 
@@ -110,10 +114,10 @@ namespace Convention.DAL.Migrations
                 {
                     table.PrimaryKey("PK_TalkParticipant", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TalkParticipant_Participant_ParticipantId",
+                        name: "FK_TalkParticipant_Participants_ParticipantId",
                         column: x => x.ParticipantId,
                         principalSchema: "dbo",
-                        principalTable: "Participant",
+                        principalTable: "Participants",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TalkParticipant_Talks_ParticipantId",
@@ -124,10 +128,17 @@ namespace Convention.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Participant_ConventionId",
+                name: "IX_Participants_ConventionId",
                 schema: "dbo",
-                table: "Participant",
+                table: "Participants",
                 column: "ConventionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Participants_UserId_ConventionId",
+                schema: "dbo",
+                table: "Participants",
+                columns: new[] { "UserId", "ConventionId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_TalkParticipant_ParticipantId",
@@ -155,7 +166,7 @@ namespace Convention.DAL.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Participant",
+                name: "Participants",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
@@ -167,7 +178,7 @@ namespace Convention.DAL.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Speaker",
+                name: "Speakers",
                 schema: "dbo");
         }
     }

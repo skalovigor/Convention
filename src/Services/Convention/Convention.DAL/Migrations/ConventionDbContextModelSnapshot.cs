@@ -26,6 +26,11 @@ namespace Convention.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("BannerUrl")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -84,7 +89,10 @@ namespace Convention.DAL.Migrations
 
                     b.HasIndex("ConventionId");
 
-                    b.ToTable("Participant");
+                    b.HasIndex("UserId", "ConventionId")
+                        .IsUnique();
+
+                    b.ToTable("Participants");
                 });
 
             modelBuilder.Entity("Convention.Domain.Speaker", b =>
@@ -98,6 +106,16 @@ namespace Convention.DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ProfileUrl")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -105,7 +123,7 @@ namespace Convention.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Speaker");
+                    b.ToTable("Speakers");
                 });
 
             modelBuilder.Entity("Convention.Domain.Talk", b =>
@@ -126,6 +144,11 @@ namespace Convention.DAL.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Name")
                         .IsRequired()
