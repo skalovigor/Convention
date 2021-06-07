@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace Convention.Common.Repository
 {
-    public interface IRepository<TKey, T>
-        where T : class
+    public interface IRepository<TKey, TEntity>
+        where TEntity : class
     {
-        Task<IReadOnlyCollection<T>> GetAllAsync(Expression<Func<T, bool>> whereExpression);
-        Task<IReadOnlyCollection<T>> GetAllAsync();
-        Task<T> GetAsync(TKey id);
-        Task<T> GetAsync(Expression<Func<T, bool>> whereExpression);
-        void Add(T entity);
-        void AddRange(IEnumerable<T> entities);
-        void Update(T entity);
-        void Remove(T entity);
+        Task<IReadOnlyCollection<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> whereExpression);
+        Task<IReadOnlyCollection<TEntity>> GetAllAsync();
+        Task<TEntity> GetAsync(TKey id);
+        Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> whereExpression);
+        void Add(TEntity entity);
+        void AddRange(IEnumerable<TEntity> entities);
+        void Update(TEntity entity);
+        void Remove(TEntity entity);
     }
 }

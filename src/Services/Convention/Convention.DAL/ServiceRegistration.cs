@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Convention.DAL
 {
-    public static class InfrastructureServiceRegistration
+    public static class ServiceRegistration
     {
         public static IServiceCollection AddSqlDbServices(this IServiceCollection services, IConfiguration configuration)
         {            
@@ -12,7 +12,6 @@ namespace Convention.DAL
                 options.UseSqlServer(configuration.GetConnectionString("ConnectionString")));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IUnitOfWorkAccessor, UnitOfWorkAccessor>();
 
             return services;
         }

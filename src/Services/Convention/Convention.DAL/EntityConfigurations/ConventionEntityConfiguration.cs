@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Convention.DAL.EntityConfigurations
 {
-    internal sealed class ConventionEntityConfiguration : IEntityTypeConfiguration<Domain.Convention>
+    internal sealed class ConventionEntityConfiguration : IEntityTypeConfiguration<Domain.Models.Convention>
     {
-        public void Configure(EntityTypeBuilder<Domain.Convention> builder)
+        public void Configure(EntityTypeBuilder<Domain.Models.Convention> builder)
         {
             builder.HasKey(e => e.Id);
             

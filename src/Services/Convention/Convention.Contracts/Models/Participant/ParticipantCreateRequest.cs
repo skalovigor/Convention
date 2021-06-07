@@ -1,6 +1,6 @@
 ﻿namespace Convention.Contracts.Models.Participant
 {
-    public class ParticipantCreateRequest
+    public record ParticipantCreateRequest
     {
         public string Name { get; set; }
         public string Address { get; set; }

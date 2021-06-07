@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Convention.Domain.Enums;
 
-namespace Convention.Domain
+namespace Convention.Domain.Models
 {
     public class Talk
     {
@@ -11,13 +11,14 @@ namespace Convention.Domain
         public Guid SpeakerId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string ImageUrl { get; set; }
         public DateTime Date { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
         public TalkStatus Status { get; set; }
         public int AmountOfSeats { get; set; }
         
         public Convention Convention { get; set; }
-        public List<TalkParticipant> TalkParticipants { get; set; }
+        public IReadOnlyCollection<TalkParticipant> TalkParticipants { get; set; }
         public Speaker Speaker { get; set; }
     }
 }

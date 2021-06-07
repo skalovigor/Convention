@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Convention.Domain
+namespace Convention.Domain.Models
 {
     public class TalkParticipant
     {

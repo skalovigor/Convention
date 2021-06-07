@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Convention.Domain
+namespace Convention.Domain.Models
 {
     public class Convention
     {
@@ -12,7 +12,7 @@ namespace Convention.Domain
         public string Information { get; set; }
         public string BannerUrl { get; set; }
         public string Address { get; set; }
-        public List<Talk> Talks { get; set; }
-        public List<Participant> Participants { get; set; }
+        public IReadOnlyCollection<Talk> Talks { get; set; }
+        public IReadOnlyCollection<Participant> Participants { get; set; }
     }
 }

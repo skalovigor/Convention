@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Convention.DAL.Repositories.Speaker
 {
-    public class SpeakerRepository : Repository<Guid, Domain.Speaker>,  ISpeakerRepository
+    public class SpeakerRepository : Repository<Guid, Domain.Models.Speaker>,  ISpeakerRepository
     {
-        public SpeakerRepository(DbSet<Domain.Speaker> dbSet) : base(dbSet)
+        public SpeakerRepository(DbSet<Domain.Models.Speaker> dbSet) : base(dbSet)
         {
         }
     }

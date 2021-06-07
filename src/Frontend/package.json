@@ -9,6 +9,7 @@
     "auth0-js": "^9.13.4",
     "auth0-lock": "^11.25.1",
     "date-fns": "^2.22.1",
+    "dateformat": "^4.5.1",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
     "express-jwt-authz": "^1.0.0",

@@ -1,6 +1,6 @@
 ﻿namespace Convention.Contracts.Models.Speaker
 {
-    public class SpeakerCreateRequest
+    public record SpeakerCreateRequest
     {
         public string Name { get; set; }
         public string Position { get; set; }

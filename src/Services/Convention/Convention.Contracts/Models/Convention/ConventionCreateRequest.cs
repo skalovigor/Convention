@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Convention.Contracts.Models
+namespace Convention.Contracts.Models.Convention
 {
     public record ConventionCreateRequest
     {

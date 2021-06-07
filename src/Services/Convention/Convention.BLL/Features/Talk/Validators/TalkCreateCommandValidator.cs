@@ -24,14 +24,17 @@ namespace Convention.BLL.Features.Talk.Validators
             RuleFor(m => m.Description)
                 .NotEmpty()
                 .NotNull();
-            RuleFor(m => m.ImageUrl)
-                .NotEmpty()
-                .NotNull()
-                .MaximumLength(255);
             RuleFor(m => m.Date)
                 .NotEmpty()
                 .NotNull()
                 .MustAsync(DateMustBeDuringConventionDates);
+            RuleFor(m => m.StartTime)
+                .NotEmpty()
+                .NotNull();
+            RuleFor(m => m.EndTime)
+                .NotEmpty()
+                .NotNull()
+                .GreaterThan(m=>m.StartTime);
             RuleFor(m => m.AmountOfSeats)
                 .GreaterThanOrEqualTo(5);
             RuleFor(m => m.ConventionId)

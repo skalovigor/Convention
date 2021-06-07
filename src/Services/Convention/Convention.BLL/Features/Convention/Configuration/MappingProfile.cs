@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Convention.BLL.Features.Convention.Commands;
-using Convention.Contracts.Models;
+using Convention.Contracts.Models.Convention;
 
 namespace Convention.BLL.Features.Convention.Configuration
 {
@@ -10,7 +10,7 @@ namespace Convention.BLL.Features.Convention.Configuration
         {
             CreateMap<ConventionCreateRequest, ConventionCreateCommand>();
             
-            CreateMap<Domain.Convention, ConventionResponse>();
+            CreateMap<Domain.Models.Convention, ConventionResponse>();
         }
     }
 }

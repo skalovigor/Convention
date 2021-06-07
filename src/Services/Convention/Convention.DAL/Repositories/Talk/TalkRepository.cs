@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Convention.DAL.Repositories.Talk
 {
-    public class TalkRepository : Repository<Guid, Domain.Talk>,  ITalkRepository
+    public class TalkRepository : Repository<Guid, Domain.Models.Talk>,  ITalkRepository
     {
-        public TalkRepository(DbSet<Domain.Talk> dbSet) : base(dbSet)
+        public TalkRepository(DbSet<Domain.Models.Talk> dbSet) : base(dbSet)
         {
         }
     }

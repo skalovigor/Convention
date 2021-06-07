@@ -4,17 +4,18 @@ using AutoMapper;
 using Convention.API.Security;
 using Convention.BLL.Features.Identity.Services;
 using Convention.BLL.Features.Speaker.Commands;
-using Convention.Contracts.Models.Speaker;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using SpeakerCreateRequest = Convention.Contracts.Models.Speaker.SpeakerCreateRequest;
 
 namespace Convention.API.Controllers
 {
     [ApiController]
     [Authorize]
-    [Route("talk")]
+    [Route("speaker")]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public class SpeakerController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -44,7 +45,6 @@ namespace Convention.API.Controllers
         [Authorize(Policies.SpeakerManager)]
         [HttpPatch("{speakerId}/approve")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Approve([FromRoute] Guid speakerId)
         {
             await _mediator.Send(SpeakerApproveCommand.Of(speakerId));
@@ -59,7 +59,6 @@ namespace Convention.API.Controllers
         [Authorize(Policies.SpeakerManager)]
         [HttpDelete("{speakerId}/create")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Remove([FromRoute] Guid speakerId)
         {
             await _mediator.Send(SpeakerRemoveCommand.Of(speakerId));
@@ -74,7 +73,6 @@ namespace Convention.API.Controllers
         [Authorize]
         [HttpPut("create")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Remove([FromBody] SpeakerCreateRequest request)
         {
             var command = _mapper.Map<SpeakerCreateCommand>(request);

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using Convention.API.Attributes;
 using Convention.API.Security;
 using Convention.BLL.Features.Convention.Commands;
 using Convention.BLL.Features.Convention.Query;
@@ -11,10 +10,9 @@ using Convention.BLL.Features.Participant.Commands;
 using Convention.BLL.Features.Speaker.Queries;
 using Convention.BLL.Features.Talk.Commands;
 using Convention.BLL.Features.Talk.Queries;
-using Convention.Contracts.Models;
+using Convention.Contracts.Models.Convention;
 using Convention.Contracts.Models.Participant;
 using Convention.Contracts.Models.Talk;
-using Convention.Domain.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -22,9 +20,13 @@ using Microsoft.AspNetCore.Http;
 
 namespace Convention.API.Controllers
 {
+    /// <summary>
+    /// Convention Controller
+    /// </summary>
     [ApiController]
     [Authorize]
     [Route("convention")]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public class ConventionController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -54,7 +56,7 @@ namespace Convention.API.Controllers
         [Authorize(Policies.ConventionManager)]
         [HttpPut]
         [ProducesResponseType(typeof(Guid),StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+       
         public async Task<IActionResult> Create([FromBody]ConventionCreateRequest request)
         {
             var id= await _mediator.Send(_mapper.Map<ConventionCreateCommand>(request));
@@ -152,6 +154,19 @@ namespace Convention.API.Controllers
         public async Task<IActionResult> Participate([FromRoute] Guid conventionId, [FromRoute] Guid talkId)
         {
             return Ok();
+        }
+        
+        /// <summary>
+        /// Retrieve all speakers for convention 
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("{conventionId}/speakers")]
+        [ProducesResponseType(typeof(List<SpeakerResponse>),StatusCodes.Status200OK)]
+        public async Task<IActionResult> Speakers([FromRoute] Guid conventionId)
+        {
+            var talks = await _mediator.Send(SpeakersGetByConventionIdQuery.Of(conventionId));
+            return Ok(_mapper.Map<List<SpeakerResponse>>(talks));
         }
     }
 }

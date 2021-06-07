@@ -22,22 +22,6 @@ namespace Convention.DAL
         public ITalkRepository TalkRepo { get; }
         public ISpeakerRepository SpeakerRepo { get; }
 
-        public void Dispose()
-        {
-            if (_dbContext != null)
-            {
-                _dbContext.SaveChanges();
-            }
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            if (_dbContext != null)
-            {
-                await _dbContext.SaveChangesAsync();
-            }
-        }
-
         public Task SubmitChanges()
             => _dbContext.SaveChangesAsync();
     }

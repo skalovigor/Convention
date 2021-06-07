@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Convention.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Convention.DAL.EntityConfigurations
 {
-    internal sealed class SpeakerEntityConfiguration: IEntityTypeConfiguration<Domain.Speaker>
+    internal sealed class SpeakerEntityConfiguration: IEntityTypeConfiguration<Speaker>
     {
-        public void Configure(EntityTypeBuilder<Domain.Speaker> builder)
+        public void Configure(EntityTypeBuilder<Speaker> builder)
         {
             builder.HasKey(e => e.Id);
             

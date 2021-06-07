@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Convention.Domain
+namespace Convention.Domain.Models
 {
     public class Speaker
     {
@@ -11,6 +11,6 @@ namespace Convention.Domain
         public string Position { get; set; }
         public string ProfileUrl { get; set; }
         public bool Approved { get; set; }
-        public List<Talk> Talks { get; set; }
+        public IReadOnlyCollection<Talk> Talks { get; set; }
     }
 }

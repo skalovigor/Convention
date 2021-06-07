@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Convention.DAL.Repositories;
 using Convention.DAL.Repositories.Speaker;
 using Convention.DAL.Repositories.Talk;
 
 namespace Convention.DAL
 {
-    public interface IUnitOfWork : IDisposable, IAsyncDisposable
+    public interface IUnitOfWork
     {
         IConventionRepository ConventionRepo { get; }
         IParticipantRepository ParticipantRepo { get; }

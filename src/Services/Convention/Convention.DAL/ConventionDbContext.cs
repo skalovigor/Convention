@@ -1,23 +1,28 @@
 ﻿using Convention.DAL.EntityConfigurations;
+using Convention.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Convention.DAL
 {
     public class ConventionDbContext: DbContext
     {
+        private readonly IConfiguration _configuration;
 
         public ConventionDbContext()
         {
             
         }
-        public ConventionDbContext(DbContextOptions<ConventionDbContext> options) : base(options)
+        public ConventionDbContext(DbContextOptions<ConventionDbContext> options,
+            IConfiguration configuration) : base(options)
         {
+            _configuration = configuration;
         }
 
-        public DbSet<Domain.Convention> Conventions { get; set; }
-        public DbSet<Domain.Talk> Talks { get; set; }
-        public DbSet<Domain.Participant> Participants { get; set; }
-        public DbSet<Domain.Speaker> Speakers { get; set; }
+        public DbSet<Domain.Models.Convention> Conventions { get; set; }
+        public DbSet<Talk> Talks { get; set; }
+        public DbSet<Participant> Participants { get; set; }
+        public DbSet<Speaker> Speakers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,7 +41,7 @@ namespace Convention.DAL
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=localhost;Database=ConventionDb");
+                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("ConnectionString"));
             }
         }
     }
