@@ -64,6 +64,7 @@ namespace Convention.API
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(Policies.ConventionManager, AddScopeRequirementsToPolicy(PermissionScope.ConventionCreate));
+                options.AddPolicy(Policies.SpeakerManager, AddScopeRequirementsToPolicy(PermissionScope.SpeakerApprove, PermissionScope.SpeakerRemove));
                 options.AddPolicy(Policies.TalkCreator, AddScopeRequirementsToPolicy(PermissionScope.TalkCreate));
                 options.AddPolicy(Policies.TalkManager, AddScopeRequirementsToPolicy(PermissionScope.TalkApprove, PermissionScope.TalkRemove));
             });

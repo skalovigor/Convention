@@ -37,7 +37,8 @@ namespace Convention.DAL.Migrations
                     UserId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Position = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ProfileUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                    ProfileUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Approved = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -139,6 +140,13 @@ namespace Convention.DAL.Migrations
                 schema: "dbo",
                 table: "Participants",
                 columns: new[] { "UserId", "ConventionId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Speakers_UserId",
+                schema: "dbo",
+                table: "Speakers",
+                column: "UserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(

@@ -10,6 +10,7 @@ namespace Convention.Domain
         public string Name { get; set; }
         public string Position { get; set; }
         public string ProfileUrl { get; set; }
+        public bool Approved { get; set; }
         public List<Talk> Talks { get; set; }
     }
 }

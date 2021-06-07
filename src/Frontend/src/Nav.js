@@ -16,11 +16,7 @@ class Nav extends Component {
                     Home
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/profile">
-                    My profile
-                  </Link>
-                </li>
+               
                 <li className="nav-item">
                   <Link className="nav-link" to="/conventions">
                     Convenions
@@ -36,35 +32,37 @@ class Nav extends Component {
                     Speakers
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#gallery">
-                    Gallery
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#pricing">
-                    pricing
-                  </a>
-                </li>
-                <li>
+                {isAuthenticated() && !userHasScopes(["talk:create"]) && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/speaker-signup">
+                    Become a speaker
+                    </Link>
+                  </li>
+                )}
+                {isAuthenticated() && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/profile">
+                      My profile
+                    </Link>
+                  </li>
+                )}
+                {isAuthenticated() && userHasScopes(["manage:convention"]) && (
+                  <li>
+                    <Link className="nav-link" to="/convention-create">
+                      Create convention
+                    </Link>
+                  </li>
+                )}
+                 <li>
                   <Link
                     className="nav-link"
                     role="button"
                     to="/"
                     onClick={isAuthenticated() ? logout : login}
                   >
-                    {" "}
                     {isAuthenticated() ? "Log Out" : "Log In"}
                   </Link>
                 </li>
-                {isAuthenticated() &&
-            userHasScopes(["manage:convention"]) && (
-              <li>
-                 <Link className="nav-link" to="/convention/create">
-                    Manage
-                  </Link>
-              </li>
-            )}
               </ul>
             </div>
           </div>

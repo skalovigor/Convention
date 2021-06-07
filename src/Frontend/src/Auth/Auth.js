@@ -14,7 +14,7 @@ export default class Auth {
   constructor(history) {
     this.history = history;
     this.userProfile = null;
-    this.requestedScopes = "openid profile email read:perm approve:talks manage:convention";
+    this.requestedScopes = "openid profile email talk:create talk:approve talk:remove manage:convention speaker:approve speaker:remove";
     this.auth0 = new auth0.WebAuth({
       domain: process.env.REACT_APP_AUTH0_DOMAIN,
       clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,

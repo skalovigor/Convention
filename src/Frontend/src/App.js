@@ -10,6 +10,7 @@ import Private from "./Private";
 import Conventions from "./Conventions/Conventions";
 import ConventionCreate from "./Conventions/ConventionCreate";
 import ConventionDetails from "./Conventions/ConventionDetails";
+import SpeakerCreate from "./Speaker/SpeakerCreate";
 import PrivateRoute from "./PrivateRoute";
 import AuthContext from "./AuthContext";
 import Footer from "./Footer";
@@ -46,12 +47,12 @@ class App extends Component {
             path="/callback"
             render={props => <Callback auth={auth} {...props} />}
           />
-
           <Route
             path="/conventions"
             render={props => <Conventions {...props} />}
           />
-          <PrivateRoute path="/convention/create" component={ConventionCreate} />
+          <PrivateRoute path="/convention-create" component={ConventionCreate} />
+          <PrivateRoute path="/speaker-signup" component={SpeakerCreate} />
           <Route
             path="/convention/:conventionId"
             render={props => <ConventionDetails {...props} />}

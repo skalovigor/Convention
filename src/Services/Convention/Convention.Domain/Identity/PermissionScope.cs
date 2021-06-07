@@ -11,6 +11,10 @@ namespace Convention.Domain.Identity
         [Description("talk:remove")]
         TalkRemove,
         [Description("manage:convention")]
-        ConventionCreate
+        ConventionCreate,
+        [Description("speaker:approve")]
+        SpeakerApprove,
+        [Description("speaker:remove")]
+        SpeakerRemove,
     }
 }
