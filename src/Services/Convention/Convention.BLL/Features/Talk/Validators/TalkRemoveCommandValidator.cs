@@ -18,7 +18,8 @@ namespace Convention.BLL.Features.Talk.Validators
             RuleFor(m => m.TalkId)
                 .NotEmpty()
                 .NotNull()
-                .MustAsync(TalkMustExist);
+                .MustAsync(TalkMustExist)
+                .WithErrorCode("Talk does not exist");
         }
         
         private async Task<bool> TalkMustExist(TalkRemoveCommand command,

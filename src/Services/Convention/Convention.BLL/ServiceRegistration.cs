@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using Convention.BLL.Features.Convention.Services;
 using Convention.BLL.Features.Identity.Services;
 using Convention.BLL.Features.Services;
@@ -7,9 +8,11 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+[assembly: InternalsVisibleTo("Convention.Tests")]
 
 namespace Convention.BLL
 {
+
     public static class ServiceRegistration
     {
         public static IServiceCollection AddBllServices(this IServiceCollection services, IConfiguration configuration)

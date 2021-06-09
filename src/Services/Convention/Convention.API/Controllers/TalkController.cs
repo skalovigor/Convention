@@ -21,22 +21,14 @@ namespace Convention.API.Controllers
     public class TalkController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IMapper _mapper;
-        private readonly IIdentityContext _identityContext;
 
         /// <summary>
         /// Talk features
         /// </summary>
         /// <param name="mediator"></param>
-        /// <param name="mapper"></param>
-        /// <param name="identityContext"></param>
-        public TalkController(IMediator mediator,
-            IMapper mapper,
-            IIdentityContext identityContext)
+        public TalkController(IMediator mediator)
         {
             _mediator = mediator;
-            _mapper = mapper;
-            _identityContext = identityContext;
         }
         
         /// <summary>

@@ -20,7 +20,9 @@ namespace Convention.BLL.Features.Talk.Validators
                 .NotEmpty()
                 .NotNull()
                 .MustAsync(TalkMustExist)
-                .MustAsync(TalkMustNotBeApproved);
+                .WithErrorCode("Talk does not exist")
+                .MustAsync(TalkMustNotBeApproved)
+                .WithErrorCode("Talk already approved");
         }
         
         private async Task<bool> TalkMustExist(TalkApproveCommand command,

@@ -13,5 +13,6 @@ namespace Convention.BLL.Features.Participant.Commands
         public string Email { get; set; }
         public Guid ConventionId { get; set; }
         public string UserId { get; set; }
+
     }
 }

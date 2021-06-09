@@ -31,6 +31,7 @@ namespace Convention.BLL.Features.Participant.Handlers
             
             _unitOfWork.ParticipantRepo.Add(entity);
             await _unitOfWork.SubmitChanges();
+            
             return Unit.Value;
         }
     }
