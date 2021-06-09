@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class Profile extends Component {
   state = {
     profile: null,
-    error: ""
+    error: "",
   };
 
   componentDidMount() {
@@ -21,14 +21,19 @@ class Profile extends Component {
     if (!profile) return null;
     return (
       <>
-        <h1>Profile</h1>
-        <p>{profile.nickname}</p>
-        <img
-          style={{ maxWidth: 50, maxHeight: 50 }}
-          src={profile.picture}
-          alt="profile pic"
-        />
-        <pre>{JSON.stringify(profile, null, 2)}</pre>
+        <section>
+          <div>
+            <h1>Profile</h1>
+            <p>{profile.nickname}</p>
+            <img
+              style={{ maxWidth: 50, maxHeight: 50 }}
+              src={profile.picture}
+              alt="profile pic"
+            />
+            <pre>{JSON.stringify(profile, null, 2)}</pre>
+            <p>Bearer {this.props.auth.getAccessToken()}</p>
+          </div>
+        </section>
       </>
     );
   }

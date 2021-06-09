@@ -8,7 +8,6 @@ let _idToken = null;
 let _accessToken = null;
 let _scopes = null;
 let _expiresAt = null;
-let _roles = [];
 
 export default class Auth {
   constructor(history) {
