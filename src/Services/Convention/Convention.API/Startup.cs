@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -8,7 +9,6 @@ using Convention.API.Security;
 using Convention.BLL;
 using Convention.BLL.Infrastructure.Helpers;
 using Convention.DAL;
-using Convention.Domain;
 using Convention.Domain.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -16,9 +16,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Convention.API
 {
@@ -63,19 +63,30 @@ namespace Convention.API
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(Policies.ConventionManager, AddScopeRequirementsToPolicy(PermissionScope.ConventionCreate));
-                options.AddPolicy(Policies.SpeakerManager, AddScopeRequirementsToPolicy(PermissionScope.SpeakerApprove, PermissionScope.SpeakerRemove));
+                options.AddPolicy(Policies.ConventionManager,
+                    AddScopeRequirementsToPolicy(PermissionScope.ConventionCreate));
+                options.AddPolicy(Policies.SpeakerManager,
+                    AddScopeRequirementsToPolicy(PermissionScope.SpeakerApprove, PermissionScope.SpeakerRemove));
                 options.AddPolicy(Policies.TalkCreator, AddScopeRequirementsToPolicy(PermissionScope.TalkCreate));
-                options.AddPolicy(Policies.TalkManager, AddScopeRequirementsToPolicy(PermissionScope.TalkApprove, PermissionScope.TalkRemove));
+                options.AddPolicy(Policies.TalkManager,
+                    AddScopeRequirementsToPolicy(PermissionScope.TalkApprove, PermissionScope.TalkRemove));
             });
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Convention.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Convention.API", Version = "v1"});
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
+                c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Scheme = "bearer"
+                });
+                c.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
             });
 
             services.AddHttpContextAccessor();
@@ -87,26 +98,20 @@ namespace Convention.API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<ExceptionMiddleware>();
-            
+
             app.UseCors("Default");
 
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Convention.API v1");
-            });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Convention.API v1"); });
 
             app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
-        
+
         private static Action<AuthorizationPolicyBuilder> AddScopeRequirementsToPolicy(PermissionScope scope)
         {
             return policy => policy.Requirements.Add(new ScopeRequirement(EnumHelper.GetEnumDescription(scope)));
@@ -114,7 +119,26 @@ namespace Convention.API
 
         private static Action<AuthorizationPolicyBuilder> AddScopeRequirementsToPolicy(params PermissionScope[] scopes)
         {
-            return policy => policy.Requirements.Add(new MultipleScopeRequirements(scopes.Select(m=> EnumHelper.GetEnumDescription(m)).ToArray()));
+            return policy =>
+                policy.Requirements.Add(
+                    new MultipleScopeRequirements(scopes.Select(m => EnumHelper.GetEnumDescription(m)).ToArray()));
+        }
+
+        public class AuthorizationHeaderParameterOperationFilter : IOperationFilter
+        {
+            public void Apply(OpenApiOperation operation, OperationFilterContext context)
+            {
+                if (operation.Security == null)
+                    operation.Security = new List<OpenApiSecurityRequirement>();
+
+
+                var scheme = new OpenApiSecurityScheme { Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "bearer" } };
+                operation.Security.Add(new OpenApiSecurityRequirement
+                {
+                    [scheme] = new List<string>()
+                });
+        
+            }
         }
     }
 }
