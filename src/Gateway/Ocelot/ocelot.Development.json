@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/Convention/{level}",
+      "DownstreamPathTemplate": "/{url}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -9,20 +9,8 @@
           "Port": "80"
         }
       ],
-      "UpstreamPathTemplate": "/Convention/{level}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/Convention/{level}/{level2}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "convention.api",
-          "Port": "80"
-        }
-      ],
-      "UpstreamPathTemplate": "/Convention/{level}/{level2}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+      "UpstreamPathTemplate": "/{url}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     }
   ],
   "GlobalConfiguration": {
