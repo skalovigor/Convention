@@ -48,19 +48,31 @@ class TalkCreate extends Component {
 
   render() {
     return (
+      <>
+      <section id="schedules" className="schedule section-padding">
+          <div className="container">
+            <div className="row">
+              <div className="col-12">
+                <div className="section-title-header text-center">
+                  <h1
+                    className="section-title wow fadeInUp"
+                    data-wow-delay="0.2s"
+                  >
+                    Propose a talk
+                  </h1>
+                  <p className="wow fadeInDown" data-wow-delay="0.2s">
+                    Do you have something interesting to share?<br />{" "}
+                    Please submit proposal for a talk
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       <section id="contact-map" className="section-padding">
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-12">
-              <div className="section-title-header text-center">
-                <h1
-                  className="section-title wow fadeInUp"
-                  data-wow-delay="0.2s"
-                >
-                  Propose a talk
-                </h1>
-              </div>
-            </div>
+            
             <div className="col-lg-7 col-md-12 col-xs-12">
               <div
                 className="container-form wow fadeInLeft"
@@ -195,6 +207,7 @@ class TalkCreate extends Component {
           </div>
         </div>
       </section>
+      </>
     );
   }
 }
