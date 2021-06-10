@@ -24,6 +24,16 @@ namespace OcelotApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Default", builder =>
+                {
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyOrigin();
+                });
+            });
             services.AddMvcCore()
                 .AddApiExplorer();
             services.AddOcelot();
@@ -40,6 +50,8 @@ namespace OcelotApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseCors("Default");
 
             app.UseRouting();
 
