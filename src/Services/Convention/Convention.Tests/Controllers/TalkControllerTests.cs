@@ -32,8 +32,7 @@ namespace Convention.BLL.Tests.Controllers
         
         [Theory]
         [AutoMoqData]
-        internal async Task Approve_Ok([Frozen] Mock<IMediator> mockMediator,
-            TalkController controller,
+        internal async Task Approve_Ok(TalkController controller,
             Guid talkId)
         {
             //run
@@ -59,7 +58,7 @@ namespace Convention.BLL.Tests.Controllers
         
         [Theory]
         [AutoMoqData]
-        internal async Task Remove_TalkApproveCommandExecuted([Frozen] Mock<IMediator> mockMediator,
+        internal async Task Remove_TalkRemoveCommandExecuted([Frozen] Mock<IMediator> mockMediator,
             TalkController controller,
             Guid talkId)
         {
@@ -73,8 +72,7 @@ namespace Convention.BLL.Tests.Controllers
         
         [Theory]
         [AutoMoqData]
-        internal async Task Remove_Ok([Frozen] Mock<IMediator> mockMediator,
-            TalkController controller,
+        internal async Task Remove_Ok(TalkController controller,
             Guid talkId)
         {
             //run
