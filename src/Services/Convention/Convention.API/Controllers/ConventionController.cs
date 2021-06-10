@@ -56,7 +56,6 @@ namespace Convention.API.Controllers
         [Authorize(Policies.ConventionManager)]
         [HttpPut]
         [ProducesResponseType(typeof(Guid),StatusCodes.Status200OK)]
-       
         public async Task<IActionResult> Create([FromBody]ConventionCreateRequest request)
         {
             var id= await _mediator.Send(_mapper.Map<ConventionCreateCommand>(request));
@@ -70,7 +69,7 @@ namespace Convention.API.Controllers
         [AllowAnonymous]
         [HttpGet("list")]
         [ProducesResponseType(typeof(List<ConventionResponse>),StatusCodes.Status200OK)]
-        public async Task<IActionResult> List(/*TODO: paging*/)
+        public async Task<IActionResult> List(/*TODO: paging, sorting, filters etc.*/)
         {
             var list= await _mediator.Send(ConventionGetActualQuery.Of());
             var result = _mapper.Map<List<ConventionResponse>>(list);
