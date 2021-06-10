@@ -1,0 +1,53 @@
+version: '3.4'
+
+services:
+  frontend:
+    container_name: frontend
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_API_URL=http://localhost:8010
+    ports:
+      - "3000:3000"
+    volumes:
+      - 'frontend-data:/app'
+      - '/app/node_modules'
+
+  convention.api:
+    container_name: convention.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "SeqConfiguration:Uri=http://seq:5341"
+      - "ConnectionStrings:ConnectionString=Server=conventiondb;Database=ConventionDb;User Id=sa;Password=Y12322s23s!dv2232"
+    depends_on:
+      - conventiondb
+    ports:
+      - "8000:80"
+        
+  conventiondb:
+    container_name: conventiondb
+    environment:
+      SA_PASSWORD: "Y12322s23s!dv2232"
+      ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+      - "1433:1433"
+
+  ocelot.api:
+    container_name: ocelot.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "SeqConfiguration:Uri=http://seq:5341"
+    depends_on:
+        - convention.api
+    ports:
+      - "8010:80"
+
+  seq:
+    container_name: seq
+    environment:
+        - ACCEPT_EULA=Y
+        - BASE_URI=http://localhost:5341
+    ports:
+        - "5341:80"
+    volumes:
+        - seq-data:/data   

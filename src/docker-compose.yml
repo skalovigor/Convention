@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+      
+  convention.api:
+    image: ${DOCKER_REGISTRY-}convention.api
+    build:
+      context: .
+      dockerfile: Services/Convention/Convention.API/Dockerfile
+
+  conventiondb:
+    image: mcr.microsoft.com/mssql/server:2019-latest    
+  
+  ocelot.api:
+    image: ${DOCKER_REGISTRY-}ocelot.api
+    build:
+      context: .
+      dockerfile: Gateway/Ocelot/Dockerfile
+
+  seq:
+    image: datalust/seq:latest
+
+volumes:
+   seq-data:
+   frontend-data:
+   
+
