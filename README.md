@@ -23,19 +23,21 @@ The best application for conventions
 ## Whats Including In This Repository
 #### Frontend application
 * React js single-page application
+![frontend](https://raw.githubusercontent.com/skalovigor/Convention/feature/doc/docs/frontend.jpg)
 
 #### API project; 
 * .NET 5 Web API application 
 * REST API principles, CRUD operations
 * Repository and Unit of work Pattern Implementation
 * Swagger Open API implementation
+![api](https://raw.githubusercontent.com/skalovigor/Convention/feature/doc/docs/api.png)
 
 #### API Gateway Ocelot
 * Implement **API Gateways with Ocelot**
 * Sample microservices/containers to reroute through the API Gateways
 
 #### Seq container
-* Use seql for logging
+* Use seq for logging
 
 #### Docker Compose establishment with all services on docker;
 * Container for API
