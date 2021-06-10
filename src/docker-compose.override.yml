@@ -5,6 +5,7 @@ services:
     container_name: frontend
     environment:
       - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_API_URL=http://localhost:8010
     ports:
       - "3000:3000"
     volumes:
