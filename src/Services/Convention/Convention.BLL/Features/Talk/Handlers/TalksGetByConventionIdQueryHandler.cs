@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Convention.BLL.Features.Talk.Queries;
@@ -21,7 +22,7 @@ namespace Convention.BLL.Features.Talk.Handlers
         {
             var talks = await _unitOfWork.TalkRepo.WhereAsync(m => m.ConventionId == request.ConventionId
                                                                    && m.Status == TalkStatus.Approved);
-            return talks;
+            return talks.OrderBy(m=> m.Date).ToList();
         }
     }
 }
