@@ -178,7 +178,7 @@ class ConventionDetails extends Component {
                                         alt=""
                                       />
                                     </div>
-                                    <span className="time">{talk.startTime.hours}:{talk.startTime.minutes} - {talk.endTime.hours}:{talk.endTime.hours}</span>
+                                    <span className="time">{talk.startTime.hours}:{talk.startTime.minutes} - {talk.endTime.hours}:{talk.endTime.minutes}</span>
                                     <h4>{talk.name}</h4>
                                     <h5 className="name"> {speaker.name}</h5>
                                   </div>
