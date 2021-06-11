@@ -17,7 +17,7 @@ class SpeakerCreate extends Component {
 
       handleSubmit = (event) => {
         var props = this.props;
-        fetch(process.env.REACT_APP_API_URL + "/talk/create", {
+        fetch(process.env.REACT_APP_API_URL + "/speaker/create", {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
