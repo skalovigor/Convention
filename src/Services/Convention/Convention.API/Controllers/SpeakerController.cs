@@ -57,7 +57,7 @@ namespace Convention.API.Controllers
         /// <param name="speakerId"></param>
         /// <returns></returns>
         [Authorize(Policies.SpeakerManager)]
-        [HttpDelete("{speakerId}/create")]
+        [HttpDelete("{speakerId}/remove")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Remove([FromRoute] Guid speakerId)
         {
@@ -73,7 +73,7 @@ namespace Convention.API.Controllers
         [Authorize]
         [HttpPut("create")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Remove([FromBody] SpeakerCreateRequest request)
+        public async Task<IActionResult> Create([FromBody] SpeakerCreateRequest request)
         {
             var command = _mapper.Map<SpeakerCreateCommand>(request);
             await _mediator.Send(command with

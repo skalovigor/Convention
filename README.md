@@ -60,7 +60,7 @@ Follow these steps to get your development environment set up: (Before Run Start
 * CPU: 2
 3. At the root directory which include **docker-compose.yml** files, run below command:
 ```csharp
-docker --project-name convention-system up -d
+docker compose --project-name convention-system up --build
 ```
 3. Wait for docker compose all components. That’s it!
 
